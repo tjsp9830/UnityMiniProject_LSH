@@ -13,7 +13,6 @@ public class PlayerMove : MonoBehaviour
     {
         if (collision.tag == "Door")
         {
-            Debug.Log(1);
             OnClear?.Invoke();
         }
 

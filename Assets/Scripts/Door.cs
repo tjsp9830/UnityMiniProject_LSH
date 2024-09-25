@@ -10,7 +10,6 @@ public class Door : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(0);
         clearImageUI.SetActive(false);
         player.OnClear += GameClear;
     }
@@ -18,7 +17,6 @@ public class Door : MonoBehaviour
 
     public void GameClear()
     {
-        Debug.Log(2);
         clearImageUI.SetActive(true);
         Time.timeScale = 0f;
     }

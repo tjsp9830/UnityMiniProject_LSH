@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Door : MonoBehaviour
+public class ClearObject : MonoBehaviour
 {
     [SerializeField] PlayerMove player;
     [SerializeField] GameObject clearImageUI;
 
     private void Start()
     {
+        Time.timeScale = 1f;
         clearImageUI.SetActive(false);
         player.OnClear += GameClear;
     }

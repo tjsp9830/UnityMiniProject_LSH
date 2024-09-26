@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : PlayerAnimation
 {
     //컴포넌트
     [SerializeField] Rigidbody2D rigid;
     [SerializeField] SpriteRenderer render;
     [SerializeField] Animator animator;
+    [SerializeField] LayerMask groundMask;
 
     //이동
     float posX;
@@ -21,23 +22,28 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] float jumpPower = 6f;
     [SerializeField] float maxFallSpeed = 6f;
 
-    //클리어 이벤트
-    //[SerializeField] GameObject deadLineBox;
-    public UnityAction OnClear;
+    //이벤트
+    public UnityAction OnClear; //클리어 이벤트
+    public UnityAction OnEatRedMushroom; //빨간버섯 이벤트(먹으면 1단계 진화)
 
-    
+    //마리오 진화단계 (0, 1, 2)
+    [SerializeField] int curLevel;
+
+    //애니메이션 해싱관련
+    private int CheckAniHash;
+    private int curAniHash;
 
 
-    private void Start()
+
+    private void Awake()
     {
-        //transform.position = new Vector3(-6, -3, 0); --> 원래 이게 필요했는데 또 필요 없어진 이유가 ???
-        lay = new Vector2(transform.position.x, transform.position.y - 1f);
+        curLevel = 0;
     }
+
 
     private void FixedUpdate()
     {
-        PlayerMoving();
-        
+        PlayerMoving();        
                 
     }
 
@@ -76,8 +82,6 @@ public class PlayerMove : MonoBehaviour
 
     private void PlayerMoving()
     {
-        //posX = Input.GetAxis("Horizontal") * Time.deltaTime;
-        //transform.position += Vector3.right * posX * moveSpeed;
         
         rigid.AddForce(Vector2.right * posX * moveSpeed, ForceMode2D.Force);
 
@@ -94,24 +98,6 @@ public class PlayerMove : MonoBehaviour
         if (rigid.velocity.y < -maxFallSpeed)
         {
             rigid.velocity = new Vector2(rigid.velocity.x, -maxFallSpeed);
-            //animator.SetBool("isFalling", true);
-        }
-
-        //if (rigid.velocity.y > 0)
-        //{
-        //    isGrounded = false;
-        //}
-        //else
-        //    isGrounded = true;
-
-
-        if (rigid.velocity.sqrMagnitude < 0.01f)
-        {
-            //animator.SetBool("isRunning", false);
-        }
-        else
-        {
-            //animator.SetBool("isRunning", true);
         }
 
 
@@ -133,15 +119,12 @@ public class PlayerMove : MonoBehaviour
         if (isGrounded == false)
             return;
 
-
-
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         isGrounded = false;
-        //animator.SetBool("isJumping", true);
 
     }
 
-    [SerializeField] LayerMask groundMask;
+    
 
     private void GroundCheck()
     {
@@ -151,22 +134,61 @@ public class PlayerMove : MonoBehaviour
         if (hit.collider != null)
         {            
             isGrounded = true;
-            //animator.SetBool("isJumping", false);
-            //animator.SetBool("isFalling", false);
 
         }
         else
         {            
             isGrounded = false;
         }
-
+        
+    
     }
 
-
     
 
-    
+    public void AnimatorPlay()
+    {
 
+        // float의 특징상, velocity값이 정확히 0이 아닐수 있어서 애니재생의 오류를 없애기 위함
+
+        //점프 (뛰거나 떨어지기)
+        if (rigid.velocity.y > 0.01f)
+        {
+            CheckAniHash = P0_Jump_Hash;
+                    
+        }
+        else if (rigid.velocity.y < -0.01f)
+        {
+            
+            CheckAniHash = P0_Jump_Hash;
+                    
+        }
+
+        //이동 (걷거나 뛰기)
+        else if (rigid.velocity.sqrMagnitude < 0.01f)
+        {
+            
+            CheckAniHash = P0_Idle_Hash;
+                    
+
+        }
+        else
+        {
+            
+            CheckAniHash = P0_Run_Hash;
+                    
+
+        }
+        
+
+        //애니가 기존과 다를때만 실행, 프레임마다 계속 호출하지 않게됨 (애니 중복재생 막기)
+        if (curAniHash != CheckAniHash)
+        {
+            curAniHash = CheckAniHash;
+            animator.Play(curAniHash);
+        }
+
+    }
 
 
 }

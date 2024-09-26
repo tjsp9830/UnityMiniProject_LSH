@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e79a32c2bf59854eb4980e43ae946bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerFoots: {fileID: 0}
+  gumbaHitArea: {fileID: 0}
 --- !u!1 &8941034040468717482
 GameObject:
   m_ObjectHideFlags: 0

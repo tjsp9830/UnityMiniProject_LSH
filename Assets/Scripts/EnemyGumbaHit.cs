@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyGumbaHit : MonoBehaviour
 {
-    
+    //±À¹Ù ÇÇ°Ý
+    [SerializeField] GameObject gumbaHitArea;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

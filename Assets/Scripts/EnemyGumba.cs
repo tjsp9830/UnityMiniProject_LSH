@@ -37,28 +37,11 @@ public class EnemyGumba : MonoBehaviour
 
     }
 
-    //private void ColliderCheck()
-    //{
-    //    RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 0.1f, groundMask);
-
-
-    //    if (hit.collider != null)
-    //    {
-    //        Debug.Log($"{hit}");
-    //        Debug.Log($"{hit.collider}"); //레이말고 걍 부닥치면 뒤도는걸로 바꿔보셈
-    //        //벽이랑 만남
-    //        isWall = !isWall;
-
-    //    }
-
-    //}
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 9) //9번이 Pipe
         {
-            Debug.Log($"{collision}");
-            Debug.Log($"{collision.gameObject}");
             //벽이랑 만남
             isWall = !isWall;
 

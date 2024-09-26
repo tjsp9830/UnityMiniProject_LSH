@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour
     //점프
     Vector2 lay;
     [SerializeField] bool isGrounded;
-    [SerializeField] int jumpCount = 1;
+    [SerializeField] int jumpCount;
     [SerializeField] float jumpPower = 6f;
     [SerializeField] float maxFallSpeed = 6f;
 
@@ -32,6 +32,7 @@ public class PlayerMove : MonoBehaviour
     {
         //transform.position = new Vector3(-6, -3, 0); --> 원래 이게 필요했는데 또 필요 없어진 이유가 ???
         lay = new Vector2(transform.position.x, transform.position.y - 1f);
+        jumpCount = 1;
     }
 
     private void FixedUpdate()
@@ -111,12 +112,12 @@ public class PlayerMove : MonoBehaviour
             //animator.SetBool("isFalling", true);
         }
 
-        if (rigid.velocity.y > 0)
-        {
-            isGrounded = false;
-        }
-        else
-            isGrounded = true;
+        //if (rigid.velocity.y > 0)
+        //{
+        //    isGrounded = false;
+        //}
+        //else
+        //    isGrounded = true;
 
 
         if (rigid.velocity.sqrMagnitude < 0.01f)
@@ -163,7 +164,7 @@ public class PlayerMove : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, groundMask);
 
 
-        if (hit.collider != null && hit.collider.gameObject.layer == 8)
+        if (hit.collider != null)
         {
             Debug.Log(hit.collider.gameObject.layer);
             isGrounded = true;

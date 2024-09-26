@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class PlayerMove : MonoBehaviour
 {
-
+    //컴포넌트
     [SerializeField] Rigidbody2D rigid;
     [SerializeField] SpriteRenderer render;
     [SerializeField] Animator animator;
@@ -18,7 +18,6 @@ public class PlayerMove : MonoBehaviour
     //점프
     Vector2 lay;
     [SerializeField] bool isGrounded;
-    [SerializeField] int jumpCount;
     [SerializeField] float jumpPower = 6f;
     [SerializeField] float maxFallSpeed = 6f;
 
@@ -26,13 +25,13 @@ public class PlayerMove : MonoBehaviour
     //[SerializeField] GameObject deadLineBox;
     public UnityAction OnClear;
 
+    
 
 
     private void Start()
     {
         //transform.position = new Vector3(-6, -3, 0); --> 원래 이게 필요했는데 또 필요 없어진 이유가 ???
         lay = new Vector2(transform.position.x, transform.position.y - 1f);
-        jumpCount = 1;
     }
 
     private void FixedUpdate()
@@ -58,23 +57,9 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    Debug.Log($"콜리전엔터: {collision}");
-    //    Debug.Log($"콜리전엔터: {collision.gameObject}");
-    //    Debug.Log($"콜리전엔터: {collision.gameObject.tag}");
-
-    //    if (collision.gameObject.tag == "Clear")
-    //    {
-    //        OnClear?.Invoke();
-    //    }
-    //}
 
     private void OnTriggerEnter2D(Collider2D _collision)
     {
-        Debug.Log($"트리거엔터: {_collision}");
-        Debug.Log($"트리거엔터: {_collision.gameObject}");
-        Debug.Log($"트리거엔터: {_collision.gameObject.tag}");
 
         if (_collision.gameObject.layer == 7)
         {
@@ -145,14 +130,13 @@ public class PlayerMove : MonoBehaviour
 
     private void PlayerJump()
     {
-        if (isGrounded == false || jumpCount < 1)
+        if (isGrounded == false)
             return;
 
 
 
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         isGrounded = false;
-        jumpCount = 0;
         //animator.SetBool("isJumping", true);
 
     }
@@ -165,10 +149,8 @@ public class PlayerMove : MonoBehaviour
 
 
         if (hit.collider != null)
-        {
-            Debug.Log(hit.collider.gameObject.layer);
+        {            
             isGrounded = true;
-            jumpCount = 1;
             //animator.SetBool("isJumping", false);
             //animator.SetBool("isFalling", false);
 
@@ -181,7 +163,9 @@ public class PlayerMove : MonoBehaviour
     }
 
 
+    
 
+    
 
 
 

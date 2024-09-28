@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4181720301428646965}
   - component: {fileID: 4156074386644108038}
   - component: {fileID: 3746971492188934985}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: HitArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: -489259795187659282}
   - component: {fileID: 2089978151627750419}
   - component: {fileID: 4973019734904010178}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Gumba
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ MonoBehaviour:
   isWall: 0
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2048
   hitArea: {fileID: 7905655508592795156}
 --- !u!50 &2089978151627750419
 Rigidbody2D:

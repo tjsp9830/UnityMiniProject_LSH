@@ -12,15 +12,15 @@ TagManager:
   - Player
   - Water
   - UI
-  - Ground
   - Clear
-  - Monster
+  - ForeGround
+  - Ground
+  - Item
+  - Coin
   - Pipe
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Monster
+  - AttackArea
+  - HitArea
   - 
   - 
   - 

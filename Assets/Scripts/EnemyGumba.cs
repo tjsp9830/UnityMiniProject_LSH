@@ -8,8 +8,8 @@ public class EnemyGumba : MonoBehaviour
     //벽 돌진
     [SerializeField] float moveSpeed = 1f;
     [SerializeField] bool isDead = false; //T죽음 F생존
-    [SerializeField] bool isWall = false; //F오른쪽이동 T왼쪽이동
-    [SerializeField] LayerMask groundMask;
+    [SerializeField] bool isLeft = false; //T왼쪽이동 F오른쪽이동 
+    //[SerializeField] LayerMask groundMask; //11번 Pipe로
 
     //공격
     [SerializeField] GameObject hitArea; //머리 부분만 피격, 제외한 전체는 공격
@@ -30,9 +30,9 @@ public class EnemyGumba : MonoBehaviour
         if (isDead == true)
             return;
 
-        if(isWall == false)
+        if(isLeft == false)
             transform.position += Vector3.right * moveSpeed * Time.deltaTime;
-        else if(isWall == true)
+        else if(isLeft == true)
             transform.position += Vector3.left * moveSpeed * Time.deltaTime;
 
     }
@@ -40,10 +40,10 @@ public class EnemyGumba : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 9) //9번이 Pipe
+        if (collision.gameObject.layer == 11) //11번이 Pipe
         {
             //벽이랑 만남
-            isWall = !isWall;
+            isLeft = !isLeft;
 
         }
 

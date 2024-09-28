@@ -14,13 +14,13 @@ public class PlayerMove : PlayerAnimation
     //이동
     float posX;
     [SerializeField] float moveSpeed = 30f;
-    [SerializeField] float maxMoveSpeed = 5f;
+    [SerializeField] float maxMoveSpeed = 10f;
 
     //점프
     Vector2 lay;
     [SerializeField] bool isGrounded;
-    [SerializeField] float jumpPower = 6f;
-    [SerializeField] float maxFallSpeed = 6f;
+    [SerializeField] float jumpPower = 10f;
+    [SerializeField] float maxFallSpeed = 150f;
 
     //이벤트
     public UnityAction OnClear; //클리어 이벤트

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGumba : MonoBehaviour
+public class EnemyTurtle : MonoBehaviour
 {
 
     // 공통된 필드
     [SerializeField] SpriteRenderer render;
-    [SerializeField] CircleCollider2D collider;
+    [SerializeField] CapsuleCollider2D collider;
     [SerializeField] Animator ani;
     [SerializeField] private float moveSpeed;
 
@@ -17,7 +17,7 @@ public class EnemyGumba : MonoBehaviour
     [SerializeField] LayerMask groundMask; //11번 Pipe로
 
     //콜라이더 말고 스크립트 형식으로 가져왔고, 콜라이더는 자식 콜리더에 스크립트를 따로 직접 추가했음
-    [SerializeField] EnemyGumbaHit hitArea;
+    [SerializeField] EnemyTurtleHit hitArea;
 
 
 
@@ -29,12 +29,12 @@ public class EnemyGumba : MonoBehaviour
 
     private void Start()
     {
-        hitArea.OnHitGumba += EnemyHit;
+        hitArea.OnHitTurtle += EnemyHit;
     }
 
     private void FixedUpdate()
     {
-        GumbaMove();
+        TurtleMove();
     }
 
     private void Update()
@@ -43,7 +43,7 @@ public class EnemyGumba : MonoBehaviour
 
     }
 
-    private void GumbaMove()
+    private void TurtleMove()
     {
         if (isDead == true)
             return;
@@ -75,13 +75,13 @@ public class EnemyGumba : MonoBehaviour
         if (collision.gameObject.layer == 11) //11번 Pipe
         {
             //벽이랑 만남
-            isLeft = !isLeft;
+            isLeft = !isLeft;           
 
         }
 
         if (collision.gameObject.layer == 3) //3번 Player
         {
-            //GumbaAttack()
+            //TurtleAttack()
             Debug.Log("거북의 몸통박치기");
         }
 
@@ -92,23 +92,23 @@ public class EnemyGumba : MonoBehaviour
     public void EnemyHit()
     {
         isDead = true;
-        ani.SetTrigger("isTreaded");
+        ani.SetTrigger("isTurtleZziboo");
 
-        collider.enabled = false;
-        hitArea.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-
-        StartCoroutine(WaitForItG());
+        StartCoroutine(WaitForItT());
     }
 
     //얘 머리 콜라이더랑 플레이어 발 콜라이더가 부딪히면
     //이동 멈추고, isDead 처리하고, 납작 애니메이션, 이후 없애기, 점수 +100
 
-    IEnumerator WaitForItG()
+    IEnumerator WaitForItT()
     {
-        
-        yield return new WaitForSeconds(0.5f);
+        collider.enabled = false;
+        hitArea.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        yield return new WaitForSeconds(1.5f);
         gameObject.SetActive(false);
     }
+
+
 
 
 
@@ -121,7 +121,7 @@ public class EnemyGumba : MonoBehaviour
     //  [리팩토링 필요 구간]
 
 
-    //public EnemyGumba()
+    //public EnemyTurtle()
     //{
     //}
 

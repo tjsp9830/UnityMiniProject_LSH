@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2030336451250423894}
   - component: {fileID: -5235848828743802301}
   - component: {fileID: 2030336451250423895}
-  - component: {fileID: 3569810984269513183}
+  - component: {fileID: 4403232273793017440}
   m_Layer: 8
   m_Name: Flower
   m_TagString: Untagged
@@ -124,16 +124,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3569810984269513183
+--- !u!114 &4403232273793017440
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2030336451250423888}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd341ffa923609f4d8af78770df36165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 0}
+  moveSpeed: 1

@@ -22,10 +22,6 @@ public class EnemyTurtle : MonoBehaviour
 
 
     //일단 MonoBehaviour로 작동됨, 이후 리팩토링 필요
-    private void Awake()
-    {
-        moveSpeed = 1f;
-    }
 
     private void Start()
     {

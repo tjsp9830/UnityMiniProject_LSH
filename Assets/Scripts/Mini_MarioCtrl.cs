@@ -48,7 +48,7 @@ public class Mini_MarioCtrl : MonoBehaviour
     //점프
     Vector2 lay;
     [SerializeField] float jumpPower = 10f;
-    [SerializeField] float maxFallSpeed = 150f;
+    //[SerializeField] float maxFallSpeed = 150f;
     [SerializeField] bool isGrounded;
 
     //이벤트
@@ -144,7 +144,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         }
 
 
-        posX = Input.GetAxisRaw("Horizontal");
+        posX = Input.GetAxisRaw("Horizontal"); //GetAxisRaw(정수)랑 GetAxis(실수)랑 차이가 안느껴짐 ㅠㅠ
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -241,11 +241,11 @@ public class Mini_MarioCtrl : MonoBehaviour
             rigid.velocity = new Vector2(-maxMoveSpeed, rigid.velocity.y);
         }
 
-        //아래로 이동
-        if (rigid.velocity.y < -maxFallSpeed)
-        {
-            rigid.velocity = new Vector2(rigid.velocity.x, -maxFallSpeed);
-        }
+        ////아래로 이동
+        //if (rigid.velocity.y < -maxFallSpeed)
+        //{
+        //    rigid.velocity = new Vector2(rigid.velocity.x, -maxFallSpeed);
+        //}
 
         //이미지 플립
         if (posX < 0)
@@ -273,6 +273,7 @@ public class Mini_MarioCtrl : MonoBehaviour
             return;
 
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+        isGrounded = false;
 
     }
 
@@ -288,7 +289,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         // 지정해 둔 groundMask 안에서만 collider를 체크하게 되므로 다음 로직이 성립한다.
 
         if (hit08.collider != null || hit11.collider != null)
-        {
+        {            
             isGrounded = true;
 
         }
@@ -424,13 +425,13 @@ public class Mini_MarioCtrl : MonoBehaviour
                 Debug.Log("죽은거같애");
                 marioBro.ChangeState(State.Die);
             }
-            else if (marioBro.isGrounded == false && marioBro.rigid.velocity.y > 0.01f)
+            else if (marioBro.isGrounded == false && marioBro.rigid.velocity.y > 0.05f)
             {
                 Debug.Log("점프한거같애");
                 marioBro.ChangeState(State.Jump);
 
             }
-            else if (marioBro.isGrounded == true && marioBro.rigid.velocity.y < 0.01f && marioBro.posX != 0)
+            else if (marioBro.isGrounded == true && marioBro.rigid.velocity.y < 0.05f && marioBro.posX != 0)
             {
                 Debug.Log("달리는거같애");
                 marioBro.ChangeState(State.Run);
@@ -457,7 +458,7 @@ public class Mini_MarioCtrl : MonoBehaviour
 
         public override void Update()
         {
-            // Run 행동 (조건: rigid.velocity.sqrMagnitude > 0.01f)
+            // Run 행동 (조건: rigid.velocity.sqrMagnitude > 0.05f)
             marioBro.PlayerMove();
 
             // 다른 상태로 전환
@@ -465,11 +466,11 @@ public class Mini_MarioCtrl : MonoBehaviour
             {
                 marioBro.ChangeState(State.Die);
             }
-            else if (marioBro.isGrounded == false && marioBro.rigid.velocity.y > 0.01f)
+            else if (marioBro.isGrounded == false && marioBro.rigid.velocity.y > 0.05f)
             {
                 marioBro.ChangeState(State.Jump);
             }
-            else if (marioBro.isGrounded == true && marioBro.rigid.velocity.sqrMagnitude < 0.01f) //isGrounded == true && rigid.velocity.y < 0.01f
+            else if (marioBro.isGrounded == true && marioBro.rigid.velocity.sqrMagnitude < 0.05f) //isGrounded == true && rigid.velocity.y < 0.05f
             {
                 marioBro.ChangeState(State.Idle);
             }
@@ -494,7 +495,7 @@ public class Mini_MarioCtrl : MonoBehaviour
 
         public override void Update()
         {
-            // Jump 행동 (조건: rigid.velocity.y > 0.01f)
+            // Jump 행동 (조건: rigid.velocity.y > 0.05f)
             if (Input.GetKeyDown(KeyCode.Space))
                 marioBro.PlayerJump();
 
@@ -503,7 +504,7 @@ public class Mini_MarioCtrl : MonoBehaviour
             {
                 marioBro.ChangeState(State.Die);
             }
-            else if (marioBro.rigid.velocity.y < 0.01f)
+            else if (marioBro.rigid.velocity.y < 0.05f)
             {
                 marioBro.ChangeState(State.Idle);
             }

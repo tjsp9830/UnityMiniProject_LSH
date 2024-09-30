@@ -49349,7 +49349,7 @@ MonoBehaviour:
   animator: {fileID: 8434170341916223107}
   groundMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2304
   moveSpeed: 20
   maxMoveSpeed: 10
   jumpPower: 15

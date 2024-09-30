@@ -149,6 +149,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //PlayerJump();
+            Debug.Log("여기니? 1");
             GroundCheck();
             
         }
@@ -299,11 +300,13 @@ public class Mini_MarioCtrl : MonoBehaviour
         //}
         if (hit.collider != null)
         {
-            isGrounded = true; 
+            isGrounded = true;
+            Debug.Log("여기니? 2");
             ChangeState(State.Jump);
         }
         else
         {
+            Debug.Log("여기니? 3");
             isGrounded = false;
         }
 

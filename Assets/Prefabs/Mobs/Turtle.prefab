@@ -152,7 +152,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -597703021, guid: 575a4317b16d4eb49a112e09d6bd2b23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.125, y: 1.0625}
@@ -236,7 +236,7 @@ MonoBehaviour:
   ani: {fileID: 8743963653700707678}
   moveSpeed: 2
   isDead: 0
-  isLeft: 0
+  isLeft: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 2048

@@ -38,7 +38,7 @@ public class Mini_MarioCtrl : MonoBehaviour
     [SerializeField] SpriteRenderer render;
     [SerializeField] Rigidbody2D rigid;
     [SerializeField] Animator animator;
-    //[SerializeField] LayerMask groundMask; 여러개를 사용해야돼서 쓰지 않기로 함
+    [SerializeField] LayerMask groundMask; //여러개를 사용해야돼서 쓰지 않기로 함
 
     //이동
     float posX;
@@ -149,10 +149,9 @@ public class Mini_MarioCtrl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //PlayerJump();
-            ChangeState(State.Jump);
+            GroundCheck();
+            
         }
-        GroundCheck();
-        AnimatorPlay();
 
 
         Debug.Log("switch문 돌아감");
@@ -181,7 +180,10 @@ public class Mini_MarioCtrl : MonoBehaviour
 
         }
 
-        AnyState();
+        AnyState(); //위 스위치문을 아예 없애거나, 애니스테이트에 합쳐볼까 고민중
+
+        AnimatorPlay();
+
 
     }
 
@@ -273,7 +275,7 @@ public class Mini_MarioCtrl : MonoBehaviour
             return;
 
         rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-        isGrounded = false;
+        //isGrounded = false;
 
     }
 
@@ -283,15 +285,22 @@ public class Mini_MarioCtrl : MonoBehaviour
     /// </summary>
     private void GroundCheck()
     {
-        RaycastHit2D hit08 = Physics2D.Raycast(transform.position, Vector2.down, 0.1f,  8); //땅
-        RaycastHit2D hit11 = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, 11); //파이프
+        //RaycastHit2D hit08 = Physics2D.Raycast(transform.position, Vector2.down, 0.1f,  8); //땅
+        //RaycastHit2D hit11 = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, 11); //파이프
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, groundMask);
 
         // 지정해 둔 groundMask 안에서만 collider를 체크하게 되므로 다음 로직이 성립한다.
 
-        if (hit08.collider != null || hit11.collider != null)
-        {            
-            isGrounded = true;
+        //if (hit08.collider != null || hit11.collider != null)
+        //if (hit.collider != null)
+        //{            
+        //    isGrounded = true;
 
+        //}
+        if (hit.collider != null)
+        {
+            isGrounded = true; 
+            ChangeState(State.Jump);
         }
         else
         {

@@ -27,7 +27,7 @@ public class PlayerMove : PlayerAnimation
     public UnityAction OnEatRedMushroom; //빨간버섯 이벤트(먹으면 1단계 진화)
 
     //마리오 진화단계 (0, 1, 2)
-    [SerializeField] int curLevel;
+    //[SerializeField] int curLevel;
 
     //애니메이션 해싱관련
     private int CheckAniHash;
@@ -37,7 +37,7 @@ public class PlayerMove : PlayerAnimation
 
     private void Awake()
     {
-        curLevel = 0;
+        //curLevel = 0;
     }
 
 

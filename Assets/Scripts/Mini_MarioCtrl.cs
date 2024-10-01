@@ -42,13 +42,13 @@ public class Mini_MarioCtrl : MonoBehaviour
 
     //이동
     float posX;
-    [SerializeField] float moveSpeed = 30f;
+    [SerializeField] float moveSpeed = 5f;
     [SerializeField] float maxMoveSpeed = 10f;
 
     //점프
     Vector2 lay;
-    [SerializeField] float jumpPower = 10f;
-    //[SerializeField] float maxFallSpeed = 150f;
+    [SerializeField] int jumpPower = 5;
+    [SerializeField] float maxFallSpeed = 10f;
     [SerializeField] bool isGrounded;
 
     //이벤트
@@ -63,6 +63,7 @@ public class Mini_MarioCtrl : MonoBehaviour
     bool isGrowUp;
 
     // 애니메이션 해싱 (해시테이블 그거)
+    private int CheckAniHash;
     private int curAniHash;
     private static int idleHash;
     private static int runHash;
@@ -129,33 +130,35 @@ public class Mini_MarioCtrl : MonoBehaviour
 
     private void Update()
     {
+
         Debug.DrawRay(transform.position, Vector2.down * 0.2f, Color.red, 0.1f);
+
 
         if (Input.GetKeyDown(KeyCode.K)) //Kill
         {
             playerHp = 0;
-            ChangeState(State.Die); //명시 O? X? 
+            ChangeState(State.Die); 
         }
 
         if (Input.GetKeyDown(KeyCode.G)) //GrowUp
         {
             isGrowUp = true;
-            ChangeState(State.GrowUp); //명시 O? X? 
+            ChangeState(State.GrowUp);
         }
 
 
         posX = Input.GetAxisRaw("Horizontal"); //GetAxisRaw(정수)랑 GetAxis(실수)랑 차이가 안느껴짐 ㅠㅠ
 
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //PlayerJump();
-            Debug.Log("여기니? 1");
             GroundCheck();
             
         }
 
 
-        Debug.Log("switch문 돌아감");
+        //Debug.Log("switch문 돌아감");
         switch (curState)
         {
             case State.Idle:
@@ -206,7 +209,11 @@ public class Mini_MarioCtrl : MonoBehaviour
     }
 
 
-    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log($"{collision.gameObject.name}랑 부딪힘");
+    }
+
 
 
 
@@ -230,6 +237,8 @@ public class Mini_MarioCtrl : MonoBehaviour
         if (isDead == true)
             return;
 
+        //ChangeState(State.Run);
+
 
         rigid.AddForce(Vector2.right * posX * moveSpeed, ForceMode2D.Force);
 
@@ -244,11 +253,11 @@ public class Mini_MarioCtrl : MonoBehaviour
             rigid.velocity = new Vector2(-maxMoveSpeed, rigid.velocity.y);
         }
 
-        ////아래로 이동
-        //if (rigid.velocity.y < -maxFallSpeed)
-        //{
-        //    rigid.velocity = new Vector2(rigid.velocity.x, -maxFallSpeed);
-        //}
+        //아래로 이동
+        if (rigid.velocity.y < -maxFallSpeed)
+        {
+            rigid.velocity = new Vector2(rigid.velocity.x, -maxFallSpeed);
+        }
 
         //이미지 플립
         if (posX < 0)
@@ -301,12 +310,10 @@ public class Mini_MarioCtrl : MonoBehaviour
         if (hit.collider != null)
         {
             isGrounded = true;
-            Debug.Log("여기니? 2");
             ChangeState(State.Jump);
         }
         else
         {
-            Debug.Log("여기니? 3");
             isGrounded = false;
         }
 
@@ -421,38 +428,34 @@ public class Mini_MarioCtrl : MonoBehaviour
 
         public override void Enter() 
         { 
-            Debug.Log("Idle 진입"); 
             marioBro.curState = State.Idle; 
+            marioBro.CheckAniHash = idleHash;
         } 
 
         public override void Update()
         {
-            Debug.Log("Idle 업데이트");
             // Idle 행동을 하기
             //우와~ 가만히있자 내가제일좋아하는거야
 
             // 다른 상태로 전환
             if (marioBro.playerHp <= 0)
             {
-                Debug.Log("죽은거같애");
                 marioBro.ChangeState(State.Die);
             }
             else if (marioBro.isGrounded == false && marioBro.rigid.velocity.y > 0.05f)
             {
-                Debug.Log("점프한거같애");
                 marioBro.ChangeState(State.Jump);
 
             }
             else if (marioBro.isGrounded == true && marioBro.rigid.velocity.y < 0.05f && marioBro.posX != 0)
             {
-                Debug.Log("달리는거같애");
                 marioBro.ChangeState(State.Run);
             }
-            else { Debug.Log("여전히 가만히 있는거같애"); }
+            else { }
 
         }
 
-        public override void Exit() { Debug.Log("Idle 탈출"); }
+        public override void Exit() { }
 
 
     }
@@ -466,7 +469,11 @@ public class Mini_MarioCtrl : MonoBehaviour
         }
 
 
-        public override void Enter() { Debug.Log("Run 진입"); marioBro.curState = State.Run; }
+        public override void Enter() 
+        { 
+            marioBro.curState = State.Run; 
+            marioBro.CheckAniHash = runHash;
+        }
 
         public override void Update()
         {
@@ -487,9 +494,10 @@ public class Mini_MarioCtrl : MonoBehaviour
                 marioBro.ChangeState(State.Idle);
             }
             else { }
+
         }
 
-        public override void Exit() { Debug.Log("Run 탈출"); }
+        public override void Exit() { }
 
 
     }
@@ -503,7 +511,11 @@ public class Mini_MarioCtrl : MonoBehaviour
         }
 
 
-        public override void Enter() { Debug.Log("Jump 진입"); marioBro.curState = State.Jump; }
+        public override void Enter() 
+        { 
+            marioBro.curState = State.Jump;
+            marioBro.CheckAniHash = jumpHash;
+        }
 
         public override void Update()
         {
@@ -525,7 +537,7 @@ public class Mini_MarioCtrl : MonoBehaviour
             //버섯 업글 예정
         }
 
-        public override void Exit() { Debug.Log("Jump 탈출"); }
+        public override void Exit() { }
 
 
     }
@@ -546,6 +558,8 @@ public class Mini_MarioCtrl : MonoBehaviour
         {
             //Change 진입시 할 행동
             Debug.Log("GrowUp 진입");
+            marioBro.CheckAniHash = growUpHash;
+            marioBro.isGrowUp = false;
 
             //rememberCurState = marioBro.curState;
             //timer = 0f;
@@ -587,7 +601,11 @@ public class Mini_MarioCtrl : MonoBehaviour
         }
 
 
-        public override void Enter() { Debug.Log("Die 진입"); marioBro.curState = State.Die; }
+        public override void Enter() 
+        { 
+            marioBro.curState = State.Die;
+            marioBro.CheckAniHash = dieHash;
+        }
 
         public override void Update()
         {
@@ -597,7 +615,7 @@ public class Mini_MarioCtrl : MonoBehaviour
             // 다른 상태로 전환하지 않음
         }
 
-        public override void Exit() { Debug.Log("Die 탈출"); }
+        public override void Exit() { }
 
 
     }
@@ -611,47 +629,44 @@ public class Mini_MarioCtrl : MonoBehaviour
     private void AnimatorPlay()
     {
 
-        // 2D는 블렌드가 안되기 때문에, 밸로시티값 크기가 작아지면 전환을 주어 자연스럽게 해줌
-        // float의 특징상, velocity값이 정확히 0이 아닐수 있어서 애니재생의 오류를 없애기 위함
+        //// 2D는 블렌드가 안되기 때문에, 밸로시티값 크기가 작아지면 전환을 주어 자연스럽게 해줌
+        //// float의 특징상, velocity값이 정확히 0이 아닐수 있어서 애니재생의 오류를 없애기 위함
 
-        int CheckAniHash;
-
-
-        //변신 (일회용, 코루틴 이용해보는거 추천받음)
-        if (curState == State.GrowUp)
-        {            
-            CheckAniHash = growUpHash;
-            isGrowUp = false;
-        }
-
-        //사망
-        if (curState == State.Die)
-        {
-            CheckAniHash = dieHash;
-        }
-
-        //점프
-        else if (curState == State.Jump)
-        {
-            Debug.Log("점프해쉬 들어옴");
-            CheckAniHash = jumpHash;
-        }
-
-        //멈춤 or 이동
-        else if (curState == State.Idle)
-        {
-            Debug.Log("아이들해쉬 들어옴");
-            CheckAniHash = idleHash;
-        }
-        else
-        {
-            Debug.Log("런해쉬 들어옴");
-            CheckAniHash = runHash;
-        }
+        
 
 
-        //애니가 기존과 다를때만 실행, 프레임마다 계속 호출하지 않게됨 (애니 중복재생 막는것)
-        if (curAniHash != CheckAniHash)
+        ////변신 (일회용, 코루틴 이용해보는거 추천받음)
+        //if (curState == State.GrowUp)
+        //{            
+        //    //CheckAniHash = growUpHash;
+        //    //isGrowUp = false;
+        //}
+
+        ////사망
+        //if (curState == State.Die)
+        //{
+        //    //CheckAniHash = dieHash;
+        //}
+
+        ////점프
+        //else if (curState == State.Jump)
+        //{
+        //    //CheckAniHash = jumpHash;
+        //}
+
+        ////멈춤 or 이동
+        //else if (curState == State.Idle)
+        //{
+        //    //CheckAniHash = idleHash;
+        //}
+        //else
+        //{
+        //    //CheckAniHash = runHash;
+        //}
+
+
+        ////애니가 기존과 다를때만 실행, 프레임마다 계속 호출하지 않게됨 (애니 중복재생 막는것)
+        //if (curAniHash != CheckAniHash)
         {
             curAniHash = CheckAniHash;
             animator.Play(curAniHash);

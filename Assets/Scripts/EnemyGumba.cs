@@ -7,7 +7,8 @@ public class EnemyGumba : MonoBehaviour
 
     // 공통된 필드
     [SerializeField] SpriteRenderer render;
-    [SerializeField] CircleCollider2D collider;
+    [SerializeField] CircleCollider2D circleCollider2D;
+    [SerializeField] Rigidbody2D rigid;
     [SerializeField] Animator ani;
     [SerializeField] private float moveSpeed;
 
@@ -78,7 +79,7 @@ public class EnemyGumba : MonoBehaviour
         if (collision.gameObject.layer == 3) //3번 Player
         {
             //GumbaAttack()
-            Debug.Log("거북의 몸통박치기");
+            Debug.Log("굼바의 몸통박치기");
         }
 
 
@@ -90,8 +91,10 @@ public class EnemyGumba : MonoBehaviour
         isDead = true;
         ani.SetTrigger("isTreaded");
 
-        collider.enabled = false;
-        hitArea.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        // 이건 마리오가 죽을때로 바꾸던지 하자
+        //collider.enabled = false;
+        //hitArea.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        // 그리고 마리오가 얘네 죽일때 마리오 강제점프 시키면 됨
 
         StartCoroutine(WaitForItG());
     }

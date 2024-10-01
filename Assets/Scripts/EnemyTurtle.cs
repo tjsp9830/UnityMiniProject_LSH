@@ -7,7 +7,7 @@ public class EnemyTurtle : MonoBehaviour
 
     // 공통된 필드
     [SerializeField] SpriteRenderer render;
-    [SerializeField] CapsuleCollider2D collider;
+    [SerializeField] CapsuleCollider2D capsuleCollider2D;
     [SerializeField] Animator ani;
     [SerializeField] private float moveSpeed;
 
@@ -98,7 +98,7 @@ public class EnemyTurtle : MonoBehaviour
 
     IEnumerator WaitForItT()
     {
-        collider.enabled = false;
+        capsuleCollider2D.enabled = false;
         hitArea.gameObject.GetComponent<BoxCollider2D>().enabled = false;
         yield return new WaitForSeconds(1.5f);
         gameObject.SetActive(false);

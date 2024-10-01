@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 8976059093180148529}
   - component: {fileID: 6009212142952846460}
   m_Layer: 8
-  m_Name: Area_Ground
+  m_Name: pipe1 Area_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

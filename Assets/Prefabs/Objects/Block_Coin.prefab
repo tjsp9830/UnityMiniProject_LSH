@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6673385497549928154}
   - component: {fileID: 1837348484396230878}
   m_Layer: 8
-  m_Name: Area_Ground
+  m_Name: CB_Area_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 3630134212472216966}
   - component: {fileID: 2474176819104692382}
   m_Layer: 14
-  m_Name: Area_Hit
+  m_Name: CB_Area_Hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

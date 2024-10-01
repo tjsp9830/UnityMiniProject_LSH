@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4520647955272216877}
   - component: {fileID: 1329194710608709764}
   m_Layer: 8
-  m_Name: Area_Ground
+  m_Name: pipe2 Area_Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -123,7 +123,12 @@ public class Mini_MarioCtrl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        PlayerMove();
+        if (curState != State.Run) //Run이 아닐때여야만 하는지, 아니면 조건 자체를 없애야 되는지 실험중
+        {
+            posX = Input.GetAxisRaw("Horizontal"); //GetAxisRaw(정수)랑 GetAxis(실수)랑 차이가 안느껴짐 ㅠㅠ
+            PlayerMove();
+
+        }
 
     }
 
@@ -147,7 +152,6 @@ public class Mini_MarioCtrl : MonoBehaviour
         }
 
 
-        posX = Input.GetAxisRaw("Horizontal"); //GetAxisRaw(정수)랑 GetAxis(실수)랑 차이가 안느껴짐 ㅠㅠ
 
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -158,7 +162,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         }
 
 
-        //Debug.Log("switch문 돌아감");
+        //Debug.Log("switch문 돌아감, 잘 돌아가긴 하는데 이게 적절하게 잘 적은건지는 모르겠음");
         switch (curState)
         {
             case State.Idle:
@@ -211,7 +215,7 @@ public class Mini_MarioCtrl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log($"{collision.gameObject.name}랑 부딪힘");
+        //Debug.Log($"{collision.gameObject.name}랑 부딪힘");
     }
 
 
@@ -375,7 +379,7 @@ public class Mini_MarioCtrl : MonoBehaviour
     public void ChangeState(State state)
     {
         states[(int)curState].Exit();
-        curState = state;
+        CheckAniHash = curAniHash;
         states[(int)state].Enter();
 
     }
@@ -429,7 +433,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         public override void Enter() 
         { 
             marioBro.curState = State.Idle; 
-            marioBro.CheckAniHash = idleHash;
+            marioBro.curAniHash = idleHash;
         } 
 
         public override void Update()
@@ -472,7 +476,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         public override void Enter() 
         { 
             marioBro.curState = State.Run; 
-            marioBro.CheckAniHash = runHash;
+            marioBro.curAniHash = runHash;
         }
 
         public override void Update()
@@ -514,7 +518,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         public override void Enter() 
         { 
             marioBro.curState = State.Jump;
-            marioBro.CheckAniHash = jumpHash;
+            marioBro.curAniHash = jumpHash;
         }
 
         public override void Update()
@@ -558,7 +562,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         {
             //Change 진입시 할 행동
             Debug.Log("GrowUp 진입");
-            marioBro.CheckAniHash = growUpHash;
+            marioBro.curAniHash = growUpHash;
             marioBro.isGrowUp = false;
 
             //rememberCurState = marioBro.curState;
@@ -604,7 +608,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         public override void Enter() 
         { 
             marioBro.curState = State.Die;
-            marioBro.CheckAniHash = dieHash;
+            marioBro.curAniHash = dieHash;
         }
 
         public override void Update()
@@ -632,7 +636,7 @@ public class Mini_MarioCtrl : MonoBehaviour
         //// 2D는 블렌드가 안되기 때문에, 밸로시티값 크기가 작아지면 전환을 주어 자연스럽게 해줌
         //// float의 특징상, velocity값이 정확히 0이 아닐수 있어서 애니재생의 오류를 없애기 위함
 
-        
+
 
 
         ////변신 (일회용, 코루틴 이용해보는거 추천받음)
@@ -666,9 +670,9 @@ public class Mini_MarioCtrl : MonoBehaviour
 
 
         ////애니가 기존과 다를때만 실행, 프레임마다 계속 호출하지 않게됨 (애니 중복재생 막는것)
-        //if (curAniHash != CheckAniHash)
+        if (curAniHash != CheckAniHash)
         {
-            curAniHash = CheckAniHash;
+            //curAniHash = CheckAniHash;
             animator.Play(curAniHash);
         }
 

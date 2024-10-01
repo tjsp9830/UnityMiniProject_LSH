@@ -71,6 +71,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3630134212472216966}
   - component: {fileID: 2474176819104692382}
+  - component: {fileID: 6299530337291761144}
   m_Layer: 14
   m_Name: CB_Area_Hit
   m_TagString: Untagged
@@ -122,6 +123,18 @@ PolygonCollider2D:
       - {x: -0.25, y: -0.25}
       - {x: -0.475, y: -0.475}
       - {x: 0.475, y: -0.475}
+--- !u!114 &6299530337291761144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3668202147847933856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a96e81de8f505b4c996dd288b988dd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5356641782923633198
 GameObject:
   m_ObjectHideFlags: 0

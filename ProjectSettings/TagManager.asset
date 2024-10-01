@@ -19,10 +19,10 @@ TagManager:
   - Coin
   - Pipe
   - Monster
-  - AttackArea
-  - HitArea
-  - 
-  - 
+  - FootAttack
+  - HitMonster
+  - FistAttack
+  - HitBlock
   - 
   - 
   - 

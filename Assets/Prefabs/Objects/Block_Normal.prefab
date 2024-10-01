@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 9047610351517326708}
   - component: {fileID: 5914626680988704031}
   - component: {fileID: 3156690281908604343}
-  m_Layer: 0
+  - component: {fileID: 3017042879121203989}
+  m_Layer: 2
   m_Name: Block_Normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,6 +121,27 @@ PolygonCollider2D:
       - {x: 0.25, y: -0.25}
       - {x: -0.25, y: -0.25}
       - {x: -0.475, y: -0.475}
+--- !u!95 &3017042879121203989
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5356641782923633198}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0da3081d72c9762439a6533c3e0865f5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6243787868783098753
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 264502614370571777}
   - component: {fileID: 8723522473915654477}
-  m_Layer: 14
+  m_Layer: 16
   m_Name: NB_Area_Hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}

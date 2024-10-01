@@ -8,7 +8,7 @@ public class Mini_MarioCtrl : MonoBehaviour
 {
     // I tried to make a "Player Hierarchy-Finite-State-Machine".
 
-
+    //마리오 레벨이라는 스크립트 만들고, 레벨0 1 2 옵젝 만들어서 그거 배열로 받아오기
 
     // ------------------------------------------------------------------------------------------
     // ----------------------------------------- 필드 -------------------------------------------
@@ -27,7 +27,7 @@ public class Mini_MarioCtrl : MonoBehaviour
     Vector2 startPos;
     //[SerializeField] bool isHit; //F안맞음 T한대맞음
     [SerializeField] bool isDead; //F살아있음 T죽었음
-    
+    GameObject ffff;
 
     //코인
     [SerializeField] Mini_UICtrl ui;
@@ -56,7 +56,7 @@ public class Mini_MarioCtrl : MonoBehaviour
     public UnityAction OnPlayerDead; //게임오버 이벤트
     public UnityAction OnEatRedMushroom; //빨간버섯 이벤트(먹으면 1단계 진화)
     public UnityAction OnPickUpCoin; //코인 획득 이벤트
-
+    
 
     ////마리오 진화단계 (0, 1, 2)
     //    [SerializeField] int curLevel;
@@ -112,6 +112,8 @@ public class Mini_MarioCtrl : MonoBehaviour
         startPos = transform.position;
 
         states[(int)curState].Enter();
+             
+        
     }
 
     private void OnDestroy()
@@ -123,12 +125,8 @@ public class Mini_MarioCtrl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (curState != State.Run) //Run이 아닐때여야만 하는지, 아니면 조건 자체를 없애야 되는지 실험중
-        {
-            posX = Input.GetAxisRaw("Horizontal"); //GetAxisRaw(정수)랑 GetAxis(실수)랑 차이가 안느껴짐 ㅠㅠ
-            PlayerMove();
-
-        }
+        posX = Input.GetAxisRaw("Horizontal"); //GetAxisRaw(정수)랑 GetAxis(실수)랑 차이가 안느껴짐 ㅠㅠ
+        PlayerMove(); //위에 posX가 Fixed에 있어도 되는지 실험해보긔
 
     }
 
@@ -215,8 +213,9 @@ public class Mini_MarioCtrl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log($"{collision.gameObject.name}랑 부딪힘");
+        Debug.Log($"마리오: {collision.gameObject.layer}번. {collision.gameObject.name}");
     }
+
 
 
 
@@ -670,10 +669,12 @@ public class Mini_MarioCtrl : MonoBehaviour
 
 
         ////애니가 기존과 다를때만 실행, 프레임마다 계속 호출하지 않게됨 (애니 중복재생 막는것)
-        if (curAniHash != CheckAniHash)
+        if (CheckAniHash != curAniHash)
         {
+            CheckAniHash = curAniHash;
             //curAniHash = CheckAniHash;
-            animator.Play(curAniHash);
+            //animator.Play(curAniHash);
+            
         }
 
 

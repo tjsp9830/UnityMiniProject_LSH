@@ -430,7 +430,8 @@ public class Mini_MarioCtrl : MonoBehaviour
         }
 
         public override void Enter() 
-        { 
+        {
+            Debug.Log("Idle Enter");
             marioBro.curState = State.Idle; 
             marioBro.curAniHash = idleHash;
         } 
@@ -450,7 +451,7 @@ public class Mini_MarioCtrl : MonoBehaviour
                 marioBro.ChangeState(State.Jump);
 
             }
-            else if (marioBro.isGrounded == true && marioBro.rigid.velocity.y < 0.05f && marioBro.posX != 0)
+            else if (marioBro.isGrounded == true && marioBro.rigid.velocity.y < marioBro.maxMoveSpeed) //marioBro.posX != 0)
             {
                 marioBro.ChangeState(State.Run);
             }
@@ -473,7 +474,8 @@ public class Mini_MarioCtrl : MonoBehaviour
 
 
         public override void Enter() 
-        { 
+        {
+            Debug.Log("Run Enter");
             marioBro.curState = State.Run; 
             marioBro.curAniHash = runHash;
         }
@@ -515,7 +517,8 @@ public class Mini_MarioCtrl : MonoBehaviour
 
 
         public override void Enter() 
-        { 
+        {
+            Debug.Log("Jump Enter");
             marioBro.curState = State.Jump;
             marioBro.curAniHash = jumpHash;
         }
@@ -605,7 +608,8 @@ public class Mini_MarioCtrl : MonoBehaviour
 
 
         public override void Enter() 
-        { 
+        {
+            Debug.Log("Die Enter");
             marioBro.curState = State.Die;
             marioBro.curAniHash = dieHash;
         }

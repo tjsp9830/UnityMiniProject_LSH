@@ -10,13 +10,63 @@ using UnityEngine.Events;
 // 구성:  (반응함=플레이어가 주먹으로 치면 블럭 위로 올라갔다가 내려오는 애니), 아이템 생성하기, 스프라이트 바뀜, 사라짐
 
 
+public class Block : MonoBehaviour
+{
+    [SerializeField] GameObject rigidObject;
+    [SerializeField] protected float movingRange;
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log($"블럭: {collision.gameObject.layer}번, {collision.gameObject.name}");
+
+        if (collision.gameObject.tag == "Player")
+        {
+            Invoke("ReAct", 0f);
+            Invoke("BlockDespawn", 1f);
+
+        }
+    }
+
+
+
+    protected void ReAct()
+    {
+        // 블럭이 위로 들썩이는 애니메이션 출력
+
+        //Invoke("Went", 0f);
+        //Invoke("Back", 0.5f);
+        //Invoke("CreateItem", 0.05f);
+        rigidObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * movingRange, ForceMode2D.Impulse);
+
+        Debug.Log("블럭이 들썩거렸다");
+    }
+
+
+    // 사라짐: 일반
+    protected void BlockDespawn()
+    {
+        // 블록 사라짐 
+        Debug.Log("블럭이 사라진다");
+        this.gameObject.SetActive(false);        
+    }
+
+
+
+}
+
+
+
+/*
+ * 부모 스크립트 버전
 public abstract class Block : MonoBehaviour
 {
     
     [SerializeField] protected SpriteRenderer render;
     [SerializeField] protected Sprite blockOff;
+    [SerializeField] GameObject rigidObject;
 
-    [SerializeField] protected float movingSpeed;
+    [SerializeField] protected float movingRange;
     Vector3 curPos;
     Vector3 reActPos;
 
@@ -24,42 +74,33 @@ public abstract class Block : MonoBehaviour
 
     private void Start()
     {
-        movingSpeed *= 0.1f;
         curPos = transform.position;
         reActPos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
     }
 
-
-    //protected void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.layer == 15)
-    //    {
-    //        Debug.Log($"블럭: {collision.gameObject.name}");
-    //        OnTouched?.Invoke();
-    //    }
-    //}
 
 
     // [가상] 반응함: 일반, 동전, 아템
     protected void ReAct()
     {
         // 블럭이 위로 들썩이는 애니메이션 출력
-        Debug.Log("블럭이 들썩인다");
-        
-        Invoke("Went", 0f);
-        Invoke("CreateItem", 0.5f);
-        Invoke("Back", 1f);
 
+        //Invoke("Went", 0f);
+        //Invoke("Back", 0.5f);
+        //Invoke("CreateItem", 0.05f);
+        rigidObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * movingRange, ForceMode2D.Impulse);
+
+        Debug.Log("블럭이 들썩거렸다");
     }
 
-    private void Went()
+    protected void Went()
     {
-        transform.Translate(reActPos * movingSpeed);        
+        transform.Translate(reActPos * movingRange);        
     }
 
-    private void Back()
+    protected void Back()
     {
-        transform.Translate(curPos * movingSpeed);
+        transform.Translate(curPos * movingRange);
     }
 
 
@@ -100,6 +141,7 @@ public abstract class Block : MonoBehaviour
 
 
 }
+*/
 
 
 

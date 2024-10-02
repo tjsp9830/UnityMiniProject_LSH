@@ -30,14 +30,14 @@ public abstract class Block : MonoBehaviour
     }
 
 
-    protected void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 15)
-        {
-            Debug.Log($"블럭: {collision.gameObject.name}");
-            OnTouched?.Invoke();
-        }
-    }
+    //protected void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.layer == 15)
+    //    {
+    //        Debug.Log($"블럭: {collision.gameObject.name}");
+    //        OnTouched?.Invoke();
+    //    }
+    //}
 
 
     // [가상] 반응함: 일반, 동전, 아템

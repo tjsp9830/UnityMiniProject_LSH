@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Block_Normal : Block
+public class Block_Normal : Block
 {
 
     //private void Start()
@@ -10,15 +10,17 @@ public abstract class Block_Normal : Block
     //    OnTouched += base.ReAct;
     //}
 
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.layer == 15)
-    //    {
-    //        Debug.Log($"블럭: {collision.gameObject.name}");
-    //        base.ReAct();
-    //        OnTouched?.Invoke();
-    //    }
-    //}
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log($"블럭: {collision.gameObject.layer}번, {collision.gameObject.name}");
+
+        //if (collision.gameObject.layer == 15)
+        //{
+        //    Debug.Log($"블럭: {collision.gameObject.name}");
+        //    base.ReAct();
+        //    OnTouched?.Invoke();
+        //}
+    }
 
 
 
